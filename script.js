@@ -17,7 +17,7 @@ function registerTrainer() {
     req.onload = () => {
         location.href = "index.html";
     };
-    req.open('POST', 'http://35.239.205.133:9000/trainer');
+    req.open('POST', 'http://35.242.169.35:9000/trainer');
     req.setRequestHeader('Content-Type', 'application/json');
     req.send(JSON.stringify(formDataObj));
     // console.log(JSON.stringify(formDataObj));
