@@ -13,10 +13,36 @@ function httpRequest(method, url, callback, headers, body) {
 }
 
 
+function formToObject(formElement) {
+	let body = {}
+	for (let input of event.target) {
+		if (input.name) { // dont include the submit button
+			body[input.name] = input.value;
+			input.value = "";
+		}
+	}
+	return JSON.stringify(body);
+} 
+
+function postSubject(event) {
+	// let data = formToObject(event.target);
+	let method = 'POST';
+	let url = 'http://35.239.205.133:9000/trainer';
+	let body = formToObject(event.target);
+	let callback = displaySubjects;
+	let headers = {
+		"Content-Type": "application/json"
+	}
+	httpRequest(method, url, callback, headers, body);
+	return false
+}
+
+
+
 function createDeleteButton(id) {
 	let button = document.createElement('button');
 	button.innerText = "Delete";
-	button.setAttribute("onclick", `deleteTrainer(${id})`);
+	button.setAttribute("onclick", `deleteSubject(${id})`);
 	button.className = 'btn btn-danger';
 	return button;
 }
@@ -70,7 +96,7 @@ function createNewTable(request) {
 }
 
 
-function displayTrainers() {
+function displaySubjects() {
 	let method = "GET";
 	let url = 'http://35.239.205.133:9000/trainer';
 	body = null;
@@ -82,14 +108,63 @@ function displayTrainers() {
 }
 
 
-displayTrainers();
+displaySubjects();
 
-function deleteTrainer(id) {
+function deleteSubject(id) {
 	let method = "DELETE";
 	let url = `http://35.239.205.133:9000/trainer/${id}`;
-	let callback = displayTrainers;
+	let callback = displaySubjects;
 	let headers = {
 		"Content-Type": "application/json"
 	}
 	httpRequest(method, url, callback, headers);
+}
+
+
+
+function createForm(id) {
+    var form = document.createElement("form");
+	form.setAttribute('onsubmit',`return editSubject(event, ${id})`);
+    form.id = "editSub";
+    let exists = document.getElementById("editSub")
+    console.log (exists)
+    if (exists == null ){
+	var name = document.createElement("input"); 
+	name.setAttribute('type', "text");
+	name.setAttribute('name', "name");
+    name.value = ('this is me ');
+    
+	var category = document.createElement("input"); 
+	category.setAttribute('type', "text");
+	category.setAttribute('name', "category");
+
+	var submit = document.createElement("input");
+	submit.setAttribute('type', "submit");
+	submit.setAttribute('value', "Submit");
+
+	form.innerText = 'First name:';
+	form.appendChild(name);
+	form.appendChild(category);
+	form.appendChild(submit);
+
+    document.body.appendChild(form);
+    }else{
+
+    }
+}
+
+function editSubject(event, id) {
+	let method = "POST";
+	let url = "http://35.239.205.133:9000/notes/";
+	let callback = displaySubjects;
+	let headers = {
+		"Content-Type": "application/json"
+	}
+	tempObject = JSON.parse(formToObject(event.target));
+	Object.assign(tempObject, {id : id});
+    let body = JSON.stringify(tempObject);
+    console.log(body);
+    httpRequest(method, url, callback, headers, body);
+    document.getElementById('editSub').remove();
+	return false;
 }
