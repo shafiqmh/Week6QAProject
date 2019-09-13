@@ -16,7 +16,7 @@ function httpRequest(method, url, callback, headers, body) {
 function createDeleteButton(id) {
 	let button = document.createElement('button');
 	button.innerText = "Delete";
-	button.setAttribute("onclick", `deleteBoxer(${id})`);
+	button.setAttribute("onclick", `deleteTrainer(${id})`);
 	button.className = 'btn btn-danger';
 	return button;
 }
@@ -83,3 +83,13 @@ function displayTrainers() {
 
 
 displayTrainers();
+
+function deleteTrainer(id) {
+	let method = "DELETE";
+	let url = `http://35.239.205.133:9000/trainer/${id}`;
+	let callback = displayTrainers;
+	let headers = {
+		"Content-Type": "application/json"
+	}
+	httpRequest(method, url, callback, headers);
+}
