@@ -140,7 +140,8 @@ function createForm(id) {
 
 	var submit = document.createElement("input");
 	submit.setAttribute('type', "submit");
-	submit.setAttribute('value', "Submit");
+    submit.setAttribute('value', "Submit");
+    
 
 	form.innerText = 'First name:';
 	form.appendChild(name);

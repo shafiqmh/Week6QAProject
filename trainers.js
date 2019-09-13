@@ -27,8 +27,9 @@ function formToObject(formElement) {
 function postSubject(event) {
 	// let data = formToObject(event.target);
 	let method = 'POST';
-	let url = 'http://35.239.205.133:9000/trainer';
+	let url = 'http://35.239.205.133:9000/notes';
 	let body = formToObject(event.target);
+	console.log(body);
 	let callback = displaySubjects;
 	let headers = {
 		"Content-Type": "application/json"
@@ -129,22 +130,26 @@ function createForm(id) {
     let exists = document.getElementById("editSub")
     console.log (exists)
     if (exists == null ){
-	var name = document.createElement("input"); 
-	name.setAttribute('type', "text");
-	name.setAttribute('name', "name");
-    name.value = ('this is me ');
+	var firstName = document.createElement("input"); 
+	firstName.setAttribute('type', "text");
+	firstName.setAttribute('name', "firstName");
+	
+	
+	var secondName = document.createElement("input"); 
+	secondName.setAttribute('type', "text");
+	secondName.setAttribute('name', "secondName");
     
-	var category = document.createElement("input"); 
-	category.setAttribute('type', "text");
-	category.setAttribute('name', "category");
+	var specialty = document.createElement("input"); 
+	specialty.setAttribute('type', "text");
+	specialty.setAttribute('name', "specialty");
 
 	var submit = document.createElement("input");
 	submit.setAttribute('type', "submit");
 	submit.setAttribute('value', "Submit");
 
-	form.innerText = 'First name:';
-	form.appendChild(name);
-	form.appendChild(category);
+	form.appendChild(firstName);
+	form.appendChild(secondName);
+	form.appendChild(specialty);
 	form.appendChild(submit);
 
     document.body.appendChild(form);
